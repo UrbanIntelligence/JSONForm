@@ -278,6 +278,7 @@
           <button class="btn-primary" type="submit">Add</button>
           <button class="btn-ghost" type="button" id="download">Download JSON</button>
           <button class="btn-ghost" type="button" id="refresh">Refresh</button>
+          <button class="btn-ghost" type="button" id="fillRandom">Fill Random</button>
           <label class="delete-wrap">
             Delete by ID
             <div class="delete-row">
@@ -312,6 +313,7 @@
     const downloadBtn = document.getElementById("download");
     const refreshBtn = document.getElementById("refresh");
     const deleteBtn = document.getElementById("delete");
+    const fillRandomBtn = document.getElementById("fillRandom");
     const deleteIdInput = document.getElementById("deleteId");
     const statusEl = document.getElementById("status");
     const entryList = document.getElementById("entryList");
@@ -355,6 +357,31 @@
       } catch (err) {
         setStatus("Unable to reach the API. Check the API URL.");
       }
+    };
+
+    const randomFrom = (list) => list[Math.floor(Math.random() * list.length)];
+
+    const randomPhone = () => {
+      const country = randomFrom(["+1", "+44", "+49", "+61", "+81", "+86"]);
+      const part1 = Math.floor(100 + Math.random() * 900);
+      const part2 = Math.floor(100 + Math.random() * 900);
+      const part3 = Math.floor(1000 + Math.random() * 9000);
+      return `${country} ${part1} ${part2} ${part3}`;
+    };
+
+    const fillRandom = () => {
+      const firstNames = ["Ava", "Noah", "Maya", "Leo", "Zara", "Owen", "Lina", "Ethan", "Ivy", "Miles"];
+      const lastNames = ["Nguyen", "Patel", "Kim", "Garcia", "Martin", "Brown", "Lee", "Carter", "Singh", "Hernandez"];
+      const nationalities = ["Canadian", "American", "British", "German", "Australian", "Japanese", "Brazilian", "French"];
+      const sexes = ["Female", "Male", "Non-binary", "Prefer not to say"];
+
+      form.querySelector("input[name=firstName]").value = randomFrom(firstNames);
+      form.querySelector("input[name=lastName]").value = randomFrom(lastNames);
+      form.querySelector("input[name=age]").value = Math.floor(18 + Math.random() * 55);
+      form.querySelector("select[name=sex]").value = randomFrom(sexes);
+      form.querySelector("input[name=nationality]").value = randomFrom(nationalities);
+      form.querySelector("input[name=phone]").value = randomPhone();
+      setStatus("Random data filled.");
     };
 
     form.addEventListener("submit", async (event) => {
@@ -408,6 +435,7 @@
     });
 
     refreshBtn.addEventListener("click", loadEntries);
+    fillRandomBtn.addEventListener("click", fillRandom);
 
     deleteBtn.addEventListener("click", async () => {
       const id = Number(deleteIdInput.value);
