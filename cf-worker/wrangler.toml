@@ -1,0 +1,8 @@
+name = "json-form-api"
+main = "src/index.js"
+compatibility_date = "2026-02-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "json-form"
+database_id = "7024b5fb-8f86-4b9e-badc-cbd23ce561c9"
